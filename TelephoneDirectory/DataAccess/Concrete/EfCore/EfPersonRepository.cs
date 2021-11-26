@@ -9,34 +9,45 @@ namespace DataAccess.Concrete.EfCore
 {
     public class EfPersonRepository : IPersonRepository
     {
+        private readonly TelephoneDbContext _context;
+        public EfPersonRepository(TelephoneDbContext context)
+        {
+            _context = context;
+        }
         public void AddPerson(Person entity)
         {
-            throw new NotImplementedException();
+            _context.Persons.Add(entity);
+            _context.SaveChanges();
         }
 
         public void DeletePerson(int Id)
         {
-            throw new NotImplementedException();
+            var person = _context.Persons.FirstOrDefault(p => p.Id == Id);
+            if (person != null)
+            {
+                _context.Persons.Remove(person);
+                _context.SaveChanges();
+            }
         }
 
         public IQueryable<Person> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.Persons;
         }
 
         public Person GetById(int Id)
         {
-            throw new NotImplementedException();
+            return _context.Persons.FirstOrDefault(p => p.Id == Id);
         }
 
         public void SavePerson(Person entity)
         {
-            throw new NotImplementedException();
+            _context.SaveChanges();
         }
 
         public void UpdatePerson(Person entity)
         {
-            throw new NotImplementedException();
+            _context.SaveChanges();
         }
     }
 }

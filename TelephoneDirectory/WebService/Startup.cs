@@ -1,4 +1,6 @@
 using DataAccess;
+using DataAccess.Abstract;
+using DataAccess.Concrete.EfCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,6 +33,7 @@ namespace WebService
             services.AddMvc();
             services.AddDbContext<TelephoneDbContext>(opt =>
             opt.UseNpgsql(Configuration.GetConnectionString("WebApiConnection"), b => b.MigrationsAssembly("DataAccess")));
+            services.AddTransient<IPersonRepository, EfPersonRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
