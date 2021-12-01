@@ -9,8 +9,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace WebService.Migrations
 {
     [DbContext(typeof(TelephoneDbContext))]
-    [Migration("20211130120933_firstMigration")]
-    partial class firstMigration
+    [Migration("20211201183542_firstmigration")]
+    partial class firstmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,6 +33,9 @@ namespace WebService.Migrations
                     b.Property<string>("Location")
                         .HasColumnType("text");
 
+                    b.Property<int>("PersonId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("TelNumber")
                         .HasColumnType("text");
 
@@ -50,9 +53,6 @@ namespace WebService.Migrations
 
                     b.Property<string>("Company")
                         .HasColumnType("text");
-
-                    b.Property<int>("ContactId")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");

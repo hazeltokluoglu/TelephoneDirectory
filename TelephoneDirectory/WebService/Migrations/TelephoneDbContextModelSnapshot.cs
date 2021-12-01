@@ -31,6 +31,9 @@ namespace WebService.Migrations
                     b.Property<string>("Location")
                         .HasColumnType("text");
 
+                    b.Property<int>("PersonId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("TelNumber")
                         .HasColumnType("text");
 
@@ -48,9 +51,6 @@ namespace WebService.Migrations
 
                     b.Property<string>("Company")
                         .HasColumnType("text");
-
-                    b.Property<int>("ContactId")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
