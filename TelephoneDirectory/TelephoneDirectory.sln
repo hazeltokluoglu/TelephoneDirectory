@@ -7,9 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TelephoneDirectory", "Telep
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebService", "WebService\WebService.csproj", "{1E05828B-4D1A-4677-9FDA-8DFD73E5EE30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{A3412505-2629-4C49-8E31-36927ABCE4C2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entity", "Entity\Entity.csproj", "{C8D057E7-620B-4BD5-A560-B861DE35A618}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entity", "Entity\Entity.csproj", "{C8D057E7-620B-4BD5-A560-B861DE35A618}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +23,6 @@ Global
 		{1E05828B-4D1A-4677-9FDA-8DFD73E5EE30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E05828B-4D1A-4677-9FDA-8DFD73E5EE30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E05828B-4D1A-4677-9FDA-8DFD73E5EE30}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A3412505-2629-4C49-8E31-36927ABCE4C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A3412505-2629-4C49-8E31-36927ABCE4C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A3412505-2629-4C49-8E31-36927ABCE4C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A3412505-2629-4C49-8E31-36927ABCE4C2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C8D057E7-620B-4BD5-A560-B861DE35A618}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C8D057E7-620B-4BD5-A560-B861DE35A618}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8D057E7-620B-4BD5-A560-B861DE35A618}.Release|Any CPU.ActiveCfg = Release|Any CPU
