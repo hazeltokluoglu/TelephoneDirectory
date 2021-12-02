@@ -27,11 +27,45 @@ namespace TelephoneDirectory.Controllers
                 list = JsonConvert.DeserializeObject<List<AllList>>(result);
             }
 
+            List<Contact> contact = new List<Contact>();
+
+            HttpResponseMessage res2 = await client.GetAsync("api/Contacts");
+
+            if (res2.IsSuccessStatusCode)
+            {
+                var result = res2.Content.ReadAsStringAsync().Result;
+                contact = JsonConvert.DeserializeObject<List<Contact>>(result);
+            }
+            contact.Insert(0, new Contact { Id = 0, Location = "Select" });
+            ViewBag.location = contact;
+
             return View(list);
 
         }
-        public async Task<IActionResult> Report()
+        public async Task<IActionResult> Report(string location)
         {
+            List<Contact> contact = new List<Contact>();
+
+            HttpClient client = _api.Initial();
+            HttpResponseMessage res2 = await client.GetAsync("api/Contacts");
+
+            if (res2.IsSuccessStatusCode)
+            {
+                var result = res2.Content.ReadAsStringAsync().Result;
+                contact = JsonConvert.DeserializeObject<List<Contact>>(result);
+            }
+
+            var number = contact.Count(c => c.Location == location);
+
+            var telNum = from n in contact
+                              where n.Location == location
+                         select n.TelNumber;
+
+            int num = telNum.Count();
+
+            ViewBag.location = location;
+            ViewBag.number = number;
+            ViewBag.telNumber = num;
 
             return View();
         }
