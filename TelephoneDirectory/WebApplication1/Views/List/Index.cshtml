@@ -1,0 +1,61 @@
+﻿@model Entity.ViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>All List</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Surname
+            </th>
+            <th>
+                Company
+            </th>
+            <th>
+                TelNumber
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Location
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Tub.Item1)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Surname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Company)
+                </td>
+            </tr>
+        }
+        @foreach (var item in Model.Tub.Item2)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TelNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
