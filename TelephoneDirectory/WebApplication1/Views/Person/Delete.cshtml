@@ -12,8 +12,11 @@
     <hr />
     <div class="card" style="width:18rem;">
         <div class="card-body" style="background-color:#dee2e6">
-            <h5 class="card-title">@Html.Raw(Model.Name)</h5>
-            <h5 class="card-title">@Html.Raw(Model.Surname)</h5>
+            <h5>Name</h5>
+            <p class="card-title">@Html.Raw(Model.Name)</p>
+            <h5>Surname</h5>
+            <p class="card-title">@Html.Raw(Model.Surname)</p>
+            <h5>Company</h5>
             <p class="card-text">@Model.Company</p>
         </div>
 

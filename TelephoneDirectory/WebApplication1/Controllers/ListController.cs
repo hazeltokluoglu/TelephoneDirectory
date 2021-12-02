@@ -16,31 +16,24 @@ namespace TelephoneDirectory.Controllers
 
         public async Task<IActionResult> Index()
         {
-            List<Person> person = new List<Person>();
-            ViewModel viewmodel = new ViewModel();
-            List<Contact> contact = new List<Contact>();
+            List<AllList> list = new List<AllList>();
 
             HttpClient client = _api.Initial();
-            HttpResponseMessage res = await client.GetAsync("api/Persons");
+            HttpResponseMessage res = await client.GetAsync("api/Alls");
 
             if (res.IsSuccessStatusCode)
             {
                 var result = res.Content.ReadAsStringAsync().Result;
-                person = JsonConvert.DeserializeObject<List<Person>>(result);
+                list = JsonConvert.DeserializeObject<List<AllList>>(result);
             }
 
-            HttpResponseMessage res2 = await client.GetAsync("api/Contacts");
+            return View(list);
 
-            if (res2.IsSuccessStatusCode)
-            {
-                var result = res2.Content.ReadAsStringAsync().Result;
-                contact = JsonConvert.DeserializeObject<List<Contact>>(result);
-            }
+        }
+        public async Task<IActionResult> Report()
+        {
 
-            viewmodel.Tub = new Tuple<List<Person>, List<Contact>>(person, contact);
-
-            return View(viewmodel);
-
+            return View();
         }
     }
 }

@@ -1,9 +1,11 @@
-﻿@model Entity.ViewModel
+﻿@model IEnumerable<Entity.AllList>
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>All List</h1>
+
+<a asp-action="Report" class="btn btn-danger" />Report</a>
 
 <table class="table">
     <thead>
@@ -29,33 +31,28 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Tub.Item1)
+        @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Surname)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Company)
-                </td>
-            </tr>
-        }
-        @foreach (var item in Model.Tub.Item2)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TelNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Location)
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Company)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TelNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+        </tr>
         }
     </tbody>
 </table>

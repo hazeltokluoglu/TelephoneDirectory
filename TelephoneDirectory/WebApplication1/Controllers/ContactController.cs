@@ -34,9 +34,25 @@ namespace TelephoneDirectory.Controllers
         }
 
         // GET: ContactController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+            Contact contact = new Contact();
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            HttpClient client = _api.Initial();
+            HttpResponseMessage res = await client.GetAsync($"api/Contacts/{id}");
+
+            if (res.IsSuccessStatusCode)
+            {
+                var result = res.Content.ReadAsStringAsync().Result;
+                contact = JsonConvert.DeserializeObject<Contact>(result);
+            }
+            return View(contact);
+
         }
 
         // GET: ContactController/Create

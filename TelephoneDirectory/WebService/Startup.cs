@@ -35,6 +35,7 @@ namespace WebService
             opt.UseNpgsql(Configuration.GetConnectionString("WebApiConnection")));
             services.AddTransient<IPersonRepository, PersonRepository>();
             services.AddTransient<IContactRepository, ContactRepository>();
+            services.AddTransient<IAllRepository, AllRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
