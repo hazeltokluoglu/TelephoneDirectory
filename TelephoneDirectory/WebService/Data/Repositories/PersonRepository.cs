@@ -1,11 +1,11 @@
-﻿using DataAccess.Abstract;
-using Entity;
+﻿using Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using WebService.Data.Interfaces;
 
-namespace DataAccess.Concrete.EfCore
+namespace WebService.Data.Repositories
 {
     public class PersonRepository : IPersonRepository
     {

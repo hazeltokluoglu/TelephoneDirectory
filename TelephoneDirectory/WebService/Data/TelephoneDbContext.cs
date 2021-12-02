@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 
-namespace DataAccess
+namespace WebService.Data
 {
     public class TelephoneDbContext:DbContext
     {

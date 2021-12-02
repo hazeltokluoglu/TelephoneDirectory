@@ -1,12 +1,11 @@
-﻿using DataAccess;
-using DataAccess.Abstract;
-using Entity;
+﻿using Entity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebService.Data.Interfaces;
 
 namespace WebService.Controllers
 {

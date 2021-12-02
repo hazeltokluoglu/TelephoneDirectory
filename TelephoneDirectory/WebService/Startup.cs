@@ -1,6 +1,3 @@
-using DataAccess;
-using DataAccess.Abstract;
-using DataAccess.Concrete.EfCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -14,6 +11,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebService.Data;
+using WebService.Data.Interfaces;
+using WebService.Data.Repositories;
 
 namespace WebService
 {
@@ -34,6 +34,7 @@ namespace WebService
             services.AddDbContext<TelephoneDbContext>(opt =>
             opt.UseNpgsql(Configuration.GetConnectionString("WebApiConnection")));
             services.AddTransient<IPersonRepository, PersonRepository>();
+            services.AddTransient<IContactRepository, ContactRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

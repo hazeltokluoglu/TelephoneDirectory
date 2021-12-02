@@ -1,0 +1,40 @@
+﻿@model Entity.Contact
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h4>Person Create</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PersonId" class="control-label"></label>
+                <select asp-for="PersonId" class="form-control" asp-items="@(new SelectList(ViewBag.ListOfPerson,"Id"))"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="TelNumber" class="control-label"></label>
+                <input asp-for="TelNumber" class="form-control" rows="8" cols="15"></input>
+                <span asp-validation-for="TelNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" rows="8" cols="15"></input>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Location" class="control-label"></label>
+                <input asp-for="Location" class="form-control" />
+                <span asp-validation-for="Location" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-primary">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
