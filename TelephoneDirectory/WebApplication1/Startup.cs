@@ -1,6 +1,10 @@
+using Data;
+using Data.Interfaces;
+using Data.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,6 +27,9 @@ namespace TelephoneDirectory
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IPersonRepository, PersonRepository>();
+            services.AddTransient<IContactRepository, ContactRepository>();
+            services.AddDbContext<TelephoneDbContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("WebApiConnection"),b=>b.MigrationsAssembly("TelephoneDirectory")));
             services.AddControllersWithViews();
         }
 

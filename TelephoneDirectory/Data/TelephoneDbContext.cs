@@ -1,8 +1,10 @@
 ﻿using Entity;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace WebService.Data
+namespace Data
 {
     public class TelephoneDbContext:DbContext
     {
@@ -11,3 +13,4 @@ namespace WebService.Data
         public DbSet<Contact> Contacts { get; set; }
     }
 }
+

@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace WebService.Migrations
+namespace TelephoneDirectory.Migrations
 {
-    public partial class firstmigration : Migration
+    public partial class firstmigrat : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

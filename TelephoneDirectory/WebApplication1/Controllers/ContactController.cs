@@ -1,6 +1,8 @@
-﻿using Entity;
+﻿using Data;
+using Entity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -8,68 +10,47 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using TelephoneDirectory.Helper;
 
 namespace TelephoneDirectory.Controllers
 {
     public class ContactController : Controller
     {
-        private readonly Api _api = new Api();
+        private readonly TelephoneDbContext _context;
+        public ContactController(TelephoneDbContext context)
+        {
+            _context = context;
+        }
 
         // GET: ContactController
         public async Task<ActionResult> Index()
         {
-            List<Contact> contact = new List<Contact>();
 
-            HttpClient client = _api.Initial();
-            HttpResponseMessage res = await client.GetAsync("api/Contacts");
-
-            if (res.IsSuccessStatusCode)
-            {
-                var result = res.Content.ReadAsStringAsync().Result;
-                contact = JsonConvert.DeserializeObject<List<Contact>>(result);
-            }
-
-            return View(contact);
+            return View(await _context.Contacts.ToListAsync());
         }
 
         // GET: ContactController/Details/5
-        public async Task<ActionResult> Details(int id)
+        public async Task<ActionResult> Details(int? id)
         {
-            Contact contact = new Contact();
-
             if (id == null)
             {
                 return NotFound();
             }
 
-            HttpClient client = _api.Initial();
-            HttpResponseMessage res = await client.GetAsync($"api/Contacts/{id}");
-
-            if (res.IsSuccessStatusCode)
+            var contact = await _context.Contacts
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (contact == null)
             {
-                var result = res.Content.ReadAsStringAsync().Result;
-                contact = JsonConvert.DeserializeObject<Contact>(result);
+                return NotFound();
             }
-            return View(contact);
 
+            return View(contact);
         }
 
         // GET: ContactController/Create
         public async Task<ActionResult> Create()
         {
-            List<Person> person = new List<Person>();
-
-            HttpClient client = _api.Initial();
-            HttpResponseMessage res = await client.GetAsync("api/Persons");
-
-            if (res.IsSuccessStatusCode)
-            {
-                var result = res.Content.ReadAsStringAsync().Result;
-                person = JsonConvert.DeserializeObject<List<Person>>(result);
-            }
-            person.Insert(0, new Person { Id = 0 , Surname="Select"});
-            ViewBag.ListOfPerson = person;
+            var persons = await _context.Persons.ToListAsync();
+            ViewBag.ListOfPerson = persons;
 
             return View();
         }
@@ -77,22 +58,12 @@ namespace TelephoneDirectory.Controllers
         // POST: ContactController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(IFormCollection collection,Contact contacts)
+        public async Task<ActionResult> Create(IFormCollection collection,Contact contact)
         {
-            Contact contact = new Contact();
-
             if (ModelState.IsValid)
             {
-                HttpClient client = _api.Initial();
-                StringContent content = new StringContent(JsonConvert.SerializeObject(contacts), Encoding.UTF8, "application/json");
-                HttpResponseMessage res = await client.PostAsync("api/Contacts", content);
-
-                if (res.IsSuccessStatusCode)
-                {
-                    var result = res.Content.ReadAsStringAsync().Result;
-                    contact = JsonConvert.DeserializeObject<Contact>(result);
-                }
-
+                _context.Add(contact);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(contact);
@@ -100,35 +71,21 @@ namespace TelephoneDirectory.Controllers
         }
 
         // GET: ContactController/Edit/5
-        public async Task<ActionResult> Edit(int id)
+        public async Task<ActionResult> Edit(int? id)
         {
-            Contact contact = new Contact();
-            List<Person> personlist = new List<Person>();
-
             if (id == null)
             {
                 return NotFound();
             }
+            var persons = await _context.Persons.ToListAsync();
+            ViewBag.ListOfPerson = persons;
 
-            HttpClient client = _api.Initial();
-            HttpResponseMessage res = await client.GetAsync("api/Persons");
-
-            if (res.IsSuccessStatusCode)
+            var contact = await _context.Contacts.FindAsync(id);
+            if (contact == null)
             {
-                var result = res.Content.ReadAsStringAsync().Result;
-                personlist = JsonConvert.DeserializeObject<List<Person>>(result);
+                return NotFound();
             }
-
-            HttpResponseMessage res2 = await client.GetAsync($"api/Contacts/{id}");
-
-            if (res2.IsSuccessStatusCode)
-            {
-                var result = res2.Content.ReadAsStringAsync().Result;
-                contact = JsonConvert.DeserializeObject<Contact>(result);
-            }
-
             ViewBag.personId = contact.PersonId;
-            ViewBag.ListOfPerson = personlist;
 
             return View(contact);
 
@@ -139,16 +96,28 @@ namespace TelephoneDirectory.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, IFormCollection collection,Contact contact)
         {
+            if (id != contact.Id)
+            {
+                return NotFound();
+            }
+
             if (ModelState.IsValid)
             {
-                HttpClient client = _api.Initial();
-                StringContent content = new StringContent(JsonConvert.SerializeObject(contact), Encoding.UTF8, "application/json");
-                HttpResponseMessage res = await client.PutAsync($"api/Contacts/{id}", content);
-
-                if (res.IsSuccessStatusCode)
+                try
                 {
-                    var result = res.Content.ReadAsStringAsync().Result;
-                    contact = JsonConvert.DeserializeObject<Contact>(result);
+                    _context.Update(contact);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ContactExists(contact.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -157,22 +126,18 @@ namespace TelephoneDirectory.Controllers
         }
 
         // GET: ContactController/Delete/5
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(int? id)
         {
-            Contact contact = new Contact();
-
             if (id == null)
             {
                 return NotFound();
             }
 
-            HttpClient client = _api.Initial();
-            HttpResponseMessage res = await client.GetAsync($"api/Contacts/{id}");
-
-            if (res.IsSuccessStatusCode)
+            var contact = await _context.Contacts
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (contact == null)
             {
-                var result = res.Content.ReadAsStringAsync().Result;
-                contact = JsonConvert.DeserializeObject<Contact>(result);
+                return NotFound();
             }
 
             return View(contact);
@@ -182,22 +147,18 @@ namespace TelephoneDirectory.Controllers
         // POST: ContactController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(int id, IFormCollection collection,Contact contact)
+        public async Task<ActionResult> Delete(int id, IFormCollection collection)
         {
-            if (ModelState.IsValid)
-            {
-                HttpClient client = _api.Initial();
-                HttpResponseMessage res = await client.DeleteAsync($"api/Contacts/{id}");
+            var contact = await _context.Contacts.FindAsync(id);
+            _context.Contacts.Remove(contact);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
 
-                if (res.IsSuccessStatusCode)
-                {
-                    var result = res.Content.ReadAsStringAsync().Result;
-                    contact = JsonConvert.DeserializeObject<Contact>(result);
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(contact);
+        }
 
+        private bool ContactExists(int id)
+        {
+            return _context.Contacts.Any(e => e.Id == id);
         }
     }
 }

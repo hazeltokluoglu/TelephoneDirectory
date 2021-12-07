@@ -1,13 +1,13 @@
-﻿using Entity;
+﻿using Data.Interfaces;
+using Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using WebService.Data.Interfaces;
 
-namespace WebService.Data.Repositories
+namespace Data.Repositories
 {
-    public class PersonRepository : IPersonRepository
+    public class PersonRepository :IPersonRepository
     {
         private readonly TelephoneDbContext _context;
         public PersonRepository(TelephoneDbContext context)

@@ -1,13 +1,13 @@
-﻿using Entity;
+﻿using Data.Interfaces;
+using Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebService.Data.Interfaces;
 
-namespace WebService.Data.Repositories
+namespace Data.Repositories
 {
-    public class ContactRepository : IContactRepository
+    public class ContactRepository :IContactRepository
     {
         private readonly TelephoneDbContext _context;
 
