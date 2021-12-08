@@ -12,3 +12,7 @@ Controller Http Rest ile veriler çekilerek yazılmıştır.
 Önyüz tasarımlarda bootstrap kullanılmıştır.
 Projeye unit test code coverage eklenmiştir.
 Projenin buna göre entegresi yapılmıştır.
+
+Proje çalıştıktan sonra üst kısımda menüler mevcuttur. 
+Bu menülere gittikçe yapmak istediğiniz işleme göre sayfalar yönlendirilecektir.
+Buradan istediğiniz işlemi gerçekleştirebilirsiniz.
